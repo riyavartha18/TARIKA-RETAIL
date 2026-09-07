@@ -46,11 +46,25 @@ class CatalogService:
         # 1. Category filter: support category_id (UUID) or category_name (string)
         if category:
             category_str = str(category).strip()
-            queryset = queryset.filter(
-                Q(category__category_id__iexact=category_str) |
-                Q(category__category_name__iexact=category_str) |
-                Q(category__category_name__icontains=category_str)
-            )
+            cat_lower = category_str.lower()
+            if cat_lower in ['tops', 'top']:
+                queryset = queryset.filter(
+                    Q(category__category_name__iexact='Tops') |
+                    Q(category__category_name__iexact='T-Shirts') |
+                    Q(category__category_name__icontains='T-Shirt')
+                )
+            elif cat_lower in ['bottom wear', 'bottoms', 'bottom']:
+                queryset = queryset.filter(
+                    Q(category__category_name__iexact='Bottom Wear') |
+                    Q(category__category_name__iexact='Trousers') |
+                    Q(category__category_name__icontains='Trouser')
+                )
+            else:
+                queryset = queryset.filter(
+                    Q(category__category_id__iexact=category_str) |
+                    Q(category__category_name__iexact=category_str) |
+                    Q(category__category_name__icontains=category_str)
+                )
 
         # 2. Text search across product_name, description, color, material, sku
         if search:

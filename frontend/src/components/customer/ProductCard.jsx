@@ -11,14 +11,17 @@ export default function ProductCard({ product, onCardClick }) {
 
   const productId = product.product_id || product.id;
   const wishlisted = isWishlisted(productId);
+  const productName = product.product_name || product.name || 'Artisanal Garment';
 
   // Calculate pricing & discount
-  const basePrice = Number(product.base_price || 0);
-  const salePrice = product.sale_price ? Number(product.sale_price) : null;
-  const isOnSale = product.is_on_sale && salePrice && salePrice < basePrice;
-  const currentPrice = isOnSale ? salePrice : basePrice;
+  const basePrice = Number(product.base_price || product.selling_price || 0);
+  const salePrice = product.sale_price !== undefined && product.sale_price !== null
+    ? Number(product.sale_price)
+    : (product.selling_price !== undefined ? Number(product.selling_price) : basePrice);
+  const isOnSale = (product.is_on_sale || salePrice < basePrice) && salePrice < basePrice;
+  const currentPrice = isOnSale ? salePrice : (salePrice || basePrice);
 
-  const discountPercent = isOnSale
+  const discountPercent = isOnSale && basePrice > 0
     ? Math.round(((basePrice - salePrice) / basePrice) * 100)
     : product.discount_percentage
     ? Math.round(Number(product.discount_percentage))
@@ -29,6 +32,7 @@ export default function ProductCard({ product, onCardClick }) {
 
   // Image source with fallback
   const imageUrl =
+    product.image ||
     product.primary_image ||
     (product.images && product.images[0]?.image_url) ||
     'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80';
@@ -75,7 +79,7 @@ export default function ProductCard({ product, onCardClick }) {
       <div className="product-image-wrap">
         <img
           src={imageUrl}
-          alt={product.name}
+          alt={productName}
           loading="lazy"
           onError={(e) => {
             e.target.src =
@@ -203,9 +207,9 @@ export default function ProductCard({ product, onCardClick }) {
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
-          title={product.name}
+          title={productName}
         >
-          {product.name}
+          {productName}
         </h4>
 
         {/* Price Row */}

@@ -44,9 +44,23 @@ class CategoryListView(APIView):
     authentication_classes = []
 
     def get(self, request):
-        # Annotate each category with count of active products
+        customer_facing_categories = [
+            'Dresses',
+            'Tops',
+            'Bottom Wear',
+            'Jeans',
+            'Jackets',
+            'Shirts',
+            'Kurtis',
+            'Sarees',
+            'Ethnic Wear',
+            'Handbags',
+            'Footwear',
+            'Accessories',
+        ]
+        # Annotate each customer-facing category with count of active products
         categories = (
-            Category.objects.all()
+            Category.objects.filter(category_name__in=customer_facing_categories)
             .annotate(
                 product_count=Count('products', filter=Q(products__is_active=True))
             )

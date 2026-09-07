@@ -158,7 +158,10 @@ export async function getCategories() {
     if (!response.ok) {
       return { success: false, error: data.detail || 'Failed to fetch categories' };
     }
-    return { success: true, categories: data.categories || [] };
+    return {
+      success: true,
+      categories: Array.isArray(data) ? data : (data.categories || [])
+    };
   } catch (err) {
     return { success: false, error: 'Network error fetching categories' };
   }
