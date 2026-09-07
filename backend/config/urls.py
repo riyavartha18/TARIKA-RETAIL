@@ -20,4 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/auth/', include('accounts.urls')),
+    path('api/catalog/', include('catalog.urls')),
+    path('api/wishlist/', include('cart.urls_wishlist')),
+    path('api/cart/', include('cart.urls')),
+    path('api/bag/', include(('cart.urls', 'bag'), namespace='bag')),
 ]

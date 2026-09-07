@@ -143,3 +143,336 @@ export async function getMe(token) {
     return { success: false, error: 'Network error' };
   }
 }
+
+/* ==========================================================================
+   CATALOG API HELPERS (Part 2A)
+   ========================================================================== */
+
+/**
+ * Fetch all categories with product counts.
+ */
+export async function getCategories() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/catalog/categories/`);
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch categories' };
+    }
+    return { success: true, categories: data.categories || [] };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching categories' };
+  }
+}
+
+/**
+ * Fetch products list with optional filters, search, sorting and pagination.
+ */
+export async function getProducts(params = {}) {
+  try {
+    const query = new URLSearchParams();
+    if (params.category) query.append('category', params.category);
+    if (params.search) query.append('search', params.search);
+    if (params.min_price) query.append('min_price', params.min_price);
+    if (params.max_price) query.append('max_price', params.max_price);
+    if (params.in_stock !== undefined && params.in_stock !== '') query.append('in_stock', params.in_stock);
+    if (params.sort) query.append('sort', params.sort);
+    if (params.page) query.append('page', params.page);
+    if (params.page_size) query.append('page_size', params.page_size);
+
+    const qs = query.toString();
+    const url = `${API_BASE_URL}/api/catalog/products/${qs ? '?' + qs : ''}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch products' };
+    }
+
+    return {
+      success: true,
+      products: data.results || [],
+      count: data.count || 0,
+      totalPages: data.total_pages || 1,
+      currentPage: data.current_page || 1,
+      hasNext: Boolean(data.next),
+      hasPrevious: Boolean(data.previous),
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching products' };
+  }
+}
+
+/**
+ * Fetch single product details by ID or slug.
+ */
+export async function getProductDetail(productId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/catalog/products/${productId}/`);
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch product details' };
+    }
+    return { success: true, product: data };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching product' };
+  }
+}
+
+/**
+ * Fetch New Arrivals.
+ */
+export async function getNewArrivals(limit = 10) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/catalog/new-arrivals/?limit=${limit}`);
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch new arrivals' };
+    }
+    return { success: true, products: data.results || [] };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching new arrivals' };
+  }
+}
+
+/**
+ * Fetch Trending Products.
+ */
+export async function getTrending(limit = 10) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/catalog/trending/?limit=${limit}`);
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch trending products' };
+    }
+    return { success: true, products: data.results || [] };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching trending products' };
+  }
+}
+
+/**
+ * Fetch Sale / Discounted Products.
+ */
+export async function getSale(limit = 10) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/catalog/sale/?limit=${limit}`);
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch sale products' };
+    }
+    return { success: true, products: data.results || [] };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching sale products' };
+  }
+}
+
+/* ==========================================================================
+   WISHLIST API HELPERS (Part 2B)
+   ========================================================================== */
+
+/**
+ * Get authenticated customer's wishlist.
+ */
+export async function getWishlist(token) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch wishlist' };
+    }
+    return {
+      success: true,
+      items: data.items || [],
+      count: data.count || 0,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching wishlist' };
+  }
+}
+
+/**
+ * Add a product to customer's wishlist.
+ */
+export async function addToWishlist(token, productId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ product_id: productId }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to add to wishlist' };
+    }
+    return { success: true, item: data.item, message: data.message };
+  } catch (err) {
+    return { success: false, error: 'Network error adding to wishlist' };
+  }
+}
+
+/**
+ * Remove a product from customer's wishlist.
+ */
+export async function removeFromWishlist(token, productId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/wishlist/${productId}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to remove from wishlist' };
+    }
+    return { success: true, message: data.message };
+  } catch (err) {
+    return { success: false, error: 'Network error removing from wishlist' };
+  }
+}
+
+/* ==========================================================================
+   BAG / CART API HELPERS (Part 2B)
+   ========================================================================== */
+
+/**
+ * Get authenticated customer's bag/cart.
+ */
+export async function getBag(token) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/cart/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to fetch bag' };
+    }
+    return {
+      success: true,
+      items: data.items || [],
+      totalItems: data.total_items || 0,
+      subtotal: data.subtotal || 0,
+      total: data.total || 0,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error fetching bag' };
+  }
+}
+
+/**
+ * Add a product to customer's bag.
+ */
+export async function addToBag(token, productId, quantity = 1) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/cart/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ product_id: productId, quantity }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to add product to bag' };
+    }
+    return {
+      success: true,
+      item: data.item,
+      cart: data.cart,
+      message: data.message,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error adding product to bag' };
+  }
+}
+
+/**
+ * Update quantity of a bag item.
+ */
+export async function updateBagQuantity(token, productId, quantity) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/cart/${productId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ quantity }),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to update quantity' };
+    }
+    return {
+      success: true,
+      item: data.item,
+      cart: data.cart,
+      message: data.message,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error updating bag quantity' };
+  }
+}
+
+/**
+ * Remove an item completely from the customer's bag.
+ */
+export async function removeFromBag(token, productId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/cart/${productId}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to remove from bag' };
+    }
+    return {
+      success: true,
+      cart: data.cart,
+      message: data.message,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error removing from bag' };
+  }
+}
+
+/**
+ * Clear the entire bag.
+ */
+export async function clearBag(token) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/cart/clear/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      return { success: false, error: data.detail || 'Failed to clear bag' };
+    }
+    return {
+      success: true,
+      message: data.message,
+    };
+  } catch (err) {
+    return { success: false, error: 'Network error clearing bag' };
+  }
+}

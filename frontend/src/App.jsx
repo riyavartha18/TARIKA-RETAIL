@@ -4,7 +4,7 @@ import { AuthProvider, useAuth, ROLE_ROUTES } from './auth/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import CustomerPlaceholder from './pages/placeholders/CustomerPlaceholder';
+import CustomerPortal from './pages/customer/CustomerPortal';
 import AdminPlaceholder from './pages/placeholders/AdminPlaceholder';
 import WarehousePlaceholder from './pages/placeholders/WarehousePlaceholder';
 import DeliveryPlaceholder from './pages/placeholders/DeliveryPlaceholder';
@@ -59,12 +59,12 @@ function AppRoutes() {
         }
       />
 
-      {/* Role-Protected Portals (Part 1 intact) */}
+      {/* Role-Protected Portals */}
       <Route
-        path="/customer"
+        path="/customer/*"
         element={
           <ProtectedRoute allowedRole="CUSTOMER">
-            <CustomerPlaceholder />
+            <CustomerPortal />
           </ProtectedRoute>
         }
       />

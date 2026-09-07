@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-wrllqiz@5mh*howbneita*abn@a7#_e4m4-2^giu!6h)a(yqst
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # Local apps
     'accounts.apps.AccountsConfig',
+    'catalog.apps.CatalogConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [

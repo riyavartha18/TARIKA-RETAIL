@@ -1,0 +1,530 @@
+/* ==========================================================================
+   TARIKA LUXURY CUSTOMER PORTAL STYLES
+   Signature Pink & Blush Palette | Dynamic Fashion Editorial Motion
+   ========================================================================== */
+
+/* MARQUEE ANNOUNCEMENT TICKER */
+.customer-marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #B8505E 0%, #D8727E 50%, #C45766 100%);
+  color: #FFFFFF;
+  padding: 8px 0;
+  white-space: nowrap;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(184, 80, 94, 0.2);
+  z-index: 101;
+}
+
+.customer-marquee-track {
+  display: inline-flex;
+  gap: 3rem;
+  animation: marqueeScroll 24s linear infinite;
+  will-change: transform;
+}
+
+.customer-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.customer-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.customer-marquee-separator {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.7rem;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* MICRO ANIMATIONS */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.35); }
+  50% { transform: scale(0.95); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-heart-beat {
+  animation: heartBeat 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bagBounce {
+  0% { transform: scale(1) translateY(0); }
+  30% { transform: scale(1.25) translateY(-4px); }
+  60% { transform: scale(0.9) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+.animate-bag-bounce {
+  animation: bagBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pulsePill {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* NAVBAR CUSTOMER CONTROLS */
+.customer-nav-link {
+  position: relative;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--tarika-text-main, #1F191B);
+  text-decoration: none;
+  padding: 0.4rem 0.2rem;
+  transition: color 0.25s ease;
+  letter-spacing: 0.02em;
+}
+
+.customer-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--tarika-rose, #D8727E);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 2px;
+}
+
+.customer-nav-link:hover,
+.customer-nav-link.active {
+  color: var(--tarika-rose, #D8727E);
+}
+
+.customer-nav-link.active::after,
+.customer-nav-link:hover::after {
+  width: 100%;
+}
+
+.customer-icon-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #D8727E 0%, #B8505E 100%);
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(184, 80, 94, 0.4);
+}
+
+/* FLASH SALE COUNTDOWN BANNER */
+.flash-sale-banner {
+  background: linear-gradient(135deg, #FBF1F0 0%, #F7E4E2 50%, #F5D3D1 100%);
+  border: 1px solid rgba(216, 114, 126, 0.25);
+  border-radius: 24px;
+  padding: 2.25rem 2.5rem;
+  box-shadow: 0 12px 35px rgba(184, 80, 94, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(216, 114, 126, 0.3);
+  box-shadow: 0 4px 12px rgba(184, 80, 94, 0.1);
+}
+
+.countdown-number {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--tarika-rose-dark, #B8505E);
+  line-height: 1.1;
+}
+
+.countdown-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tarika-text-muted, #6B5E63);
+}
+
+/* CIRCULAR & PILL OFFER TILES */
+.offer-circle-card {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(184, 80, 94, 0.12);
+}
+
+.offer-circle-card:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 16px 36px rgba(184, 80, 94, 0.22);
+}
+
+.offer-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 4px 12px;
+  background: #1F191B;
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: background 0.2s ease;
+}
+
+.offer-circle-card:hover .offer-pill-btn {
+  background: var(--tarika-rose-dark, #B8505E);
+}
+
+/* HORIZONTAL SCROLL CONTAINERS */
+.horizontal-scroll-row {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 0.75rem 0.25rem 1.5rem 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll-row::-webkit-scrollbar {
+  height: 6px;
+}
+.horizontal-scroll-row::-webkit-scrollbar-track {
+  background: rgba(240, 226, 224, 0.6);
+  border-radius: 999px;
+}
+.horizontal-scroll-row::-webkit-scrollbar-thumb {
+  background: var(--tarika-rose, #D8727E);
+  border-radius: 999px;
+}
+
+.scroll-snap-card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* TREND TRANSLATION MOOD CARDS */
+.mood-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  background: #FFFFFF;
+}
+
+.mood-card img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mood-card:hover img {
+  transform: scale(1.08);
+}
+
+.mood-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1.25rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(31, 25, 27, 0.75) 100%);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* PRODUCT CARD STYLING */
+.tarika-product-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(240, 226, 224, 0.8);
+  box-shadow: 0 4px 18px rgba(184, 80, 94, 0.05);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarika-product-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(216, 114, 126, 0.4);
+  box-shadow: 0 14px 35px rgba(184, 80, 94, 0.14);
+}
+
+.product-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #FAF7F5;
+}
+
+.product-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tarika-product-card:hover .product-image-wrap img {
+  transform: scale(1.07);
+}
+
+/* Floating Action Heart */
+.product-heart-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(240, 226, 224, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.product-heart-btn:hover {
+  background: #FFFFFF;
+  transform: scale(1.12);
+  box-shadow: 0 6px 18px rgba(216, 114, 126, 0.35);
+}
+
+.product-heart-btn.is-active {
+  background: #FBF1F0;
+  border-color: var(--tarika-rose, #D8727E);
+}
+
+/* Quick Add Overlay on Card */
+.product-quick-add-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  color: var(--tarika-text-main, #1F191B);
+  border: 1px solid rgba(216, 114, 126, 0.3);
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 9;
+}
+
+.tarika-product-card:hover .product-quick-add-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-quick-add-btn:hover {
+  background: linear-gradient(135deg, #D8727E 0%, #B8505E 100%);
+  color: #FFFFFF;
+  border-color: transparent;
+}
+
+/* PRODUCT BADGES */
+.product-badge-sale {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #D8727E 0%, #B8505E 100%);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(184, 80, 94, 0.3);
+  z-index: 10;
+}
+
+.product-badge-fast {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 3px 8px;
+  background: rgba(31, 25, 27, 0.85);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 8;
+  transition: opacity 0.2s ease;
+}
+
+.tarika-product-card:hover .product-badge-fast {
+  opacity: 0;
+}
+
+/* MODAL STYLES */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 25, 27, 0.65);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  max-width: 960px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(240, 226, 224, 0.8);
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* SHOP DEPARTMENTAL DUAL PANE */
+.department-tabs-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 140px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  padding-right: 12px;
+}
+
+.department-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--tarika-text-muted, #6B5E63);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.department-tab-btn:hover {
+  background: rgba(251, 241, 240, 0.6);
+  color: var(--tarika-rose-dark, #B8505E);
+}
+
+.department-tab-btn.is-active {
+  background: linear-gradient(135deg, #FBF1F0 0%, #F7E4E2 100%);
+  color: var(--tarika-rose-dark, #B8505E);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(184, 80, 94, 0.08);
+  border-left: 4px solid var(--tarika-rose, #D8727E);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .department-tabs-sidebar {
+    width: 100%;
+    position: static;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .department-tab-btn {
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+  .department-tab-btn.is-active {
+    border-bottom: 3px solid var(--tarika-rose, #D8727E);
+  }
+}
