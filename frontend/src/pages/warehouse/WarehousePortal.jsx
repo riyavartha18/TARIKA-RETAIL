@@ -2762,7 +2762,7 @@ export default function WarehousePortal() {
                             } else {
                               alert(res.error || 'Failed to accept return.');
                             }
-                            setReturnsActionPending(prev => { const n = {...prev}; delete n[ret.return_id]; return n; });
+                            setReturnsActionPending(prev => { const n = { ...prev }; delete n[ret.return_id]; return n; });
                           };
 
                           const handleReject = async () => {
@@ -2775,86 +2775,86 @@ export default function WarehousePortal() {
                             } else {
                               alert(res.error || 'Failed to reject return.');
                             }
-                            setReturnsActionPending(prev => { const n = {...prev}; delete n[ret.return_id]; return n; });
+                            setReturnsActionPending(prev => { const n = { ...prev }; delete n[ret.return_id]; return n; });
                           };
 
                           return (
-                          <tr key={ret.return_id} style={{ borderBottom: '1px solid var(--tarika-border, #F0E2E0)', background: isRequested ? '#FFFBF9' : 'transparent' }}>
-                            <td style={{ padding: '1rem 1.25rem', minWidth: '220px' }}>
-                              <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#1F191B', wordBreak: 'break-all' }}>
-                                {ret.return_id}
-                              </span>
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem' }}>
-                              <p style={{ margin: 0, fontWeight: 700, color: '#1F191B' }}>{ret.product_name}</p>
-                              <p style={{ margin: 0, fontSize: '0.75rem', color: '#6B5E63', fontFamily: 'monospace' }}>SKU: {ret.product_sku || 'SKU-RET'}</p>
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem' }}>
-                              <p style={{ margin: 0, fontWeight: 600, color: '#1F191B' }}>{ret.customer_name}</p>
-                              <p style={{ margin: 0, fontSize: '0.78rem', color: '#6B5E63' }}>{ret.customer_email}</p>
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem' }}>
-                              <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#B8505E', background: '#FBF1F0', padding: '0.2rem 0.55rem', borderRadius: '6px' }}>
-                                {ret.return_reason || 'Quality Issue'}
-                              </span>
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem', color: '#6B5E63' }}>
-                              {ret.return_date || 'N/A'}
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem' }}>
-                              {renderReturnStatusBadge(ret.return_status)}
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem' }}>
-                              <p style={{ margin: 0, fontSize: '0.8rem', color: '#1F191B' }}>{ret.condition_on_return || 'Standard return condition'}</p>
-                              {ret.refund_amount && (
-                                <p style={{ margin: 0, fontWeight: 700, color: '#059669', fontSize: '0.82rem' }}>
-                                  Refund: ₹{Number(ret.refund_amount).toLocaleString('en-IN')}
-                                </p>
-                              )}
-                            </td>
-                            <td style={{ padding: '1rem 1.25rem', whiteSpace: 'nowrap' }}>
-                              {isRequested ? (
-                                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                  <button
-                                    onClick={handleAccept}
-                                    disabled={!!actionState}
-                                    style={{
-                                      padding: '0.35rem 0.85rem',
-                                      borderRadius: '7px',
-                                      border: '1px solid #A7F3D0',
-                                      backgroundColor: actionState === 'accepting' ? '#D1FAE5' : '#ECFDF5',
-                                      color: '#059669',
-                                      fontSize: '0.78rem',
-                                      fontWeight: 700,
-                                      cursor: actionState ? 'wait' : 'pointer',
-                                      transition: 'all 0.2s ease',
-                                    }}
-                                  >
-                                    {actionState === 'accepting' ? '...' : 'Accept'}
-                                  </button>
-                                  <button
-                                    onClick={handleReject}
-                                    disabled={!!actionState}
-                                    style={{
-                                      padding: '0.35rem 0.85rem',
-                                      borderRadius: '7px',
-                                      border: '1px solid #FECACA',
-                                      backgroundColor: actionState === 'rejecting' ? '#FEE2E2' : '#FEF2F2',
-                                      color: '#DC2626',
-                                      fontSize: '0.78rem',
-                                      fontWeight: 700,
-                                      cursor: actionState ? 'wait' : 'pointer',
-                                      transition: 'all 0.2s ease',
-                                    }}
-                                  >
-                                    {actionState === 'rejecting' ? '...' : 'Reject'}
-                                  </button>
-                                </div>
-                              ) : (
-                                <span style={{ fontSize: '0.75rem', color: '#9E8F94' }}>—</span>
-                              )}
-                            </td>
-                          </tr>
+                            <tr key={ret.return_id} style={{ borderBottom: '1px solid var(--tarika-border, #F0E2E0)', background: isRequested ? '#FFFBF9' : 'transparent' }}>
+                              <td style={{ padding: '1rem 1.25rem', minWidth: '220px' }}>
+                                <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#1F191B', wordBreak: 'break-all' }}>
+                                  {ret.return_id}
+                                </span>
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem' }}>
+                                <p style={{ margin: 0, fontWeight: 700, color: '#1F191B' }}>{ret.product_name}</p>
+                                <p style={{ margin: 0, fontSize: '0.75rem', color: '#6B5E63', fontFamily: 'monospace' }}>SKU: {ret.product_sku || 'SKU-RET'}</p>
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem' }}>
+                                <p style={{ margin: 0, fontWeight: 600, color: '#1F191B' }}>{ret.customer_name}</p>
+                                <p style={{ margin: 0, fontSize: '0.78rem', color: '#6B5E63' }}>{ret.customer_email}</p>
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem' }}>
+                                <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#B8505E', background: '#FBF1F0', padding: '0.2rem 0.55rem', borderRadius: '6px' }}>
+                                  {ret.return_reason || 'Quality Issue'}
+                                </span>
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem', color: '#6B5E63' }}>
+                                {ret.return_date || 'N/A'}
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem' }}>
+                                {renderReturnStatusBadge(ret.return_status)}
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem' }}>
+                                <p style={{ margin: 0, fontSize: '0.8rem', color: '#1F191B' }}>{ret.condition_on_return || 'Standard return condition'}</p>
+                                {ret.refund_amount && (
+                                  <p style={{ margin: 0, fontWeight: 700, color: '#059669', fontSize: '0.82rem' }}>
+                                    Refund: ₹{Number(ret.refund_amount).toLocaleString('en-IN')}
+                                  </p>
+                                )}
+                              </td>
+                              <td style={{ padding: '1rem 1.25rem', whiteSpace: 'nowrap' }}>
+                                {isRequested ? (
+                                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                    <button
+                                      onClick={handleAccept}
+                                      disabled={!!actionState}
+                                      style={{
+                                        padding: '0.35rem 0.85rem',
+                                        borderRadius: '7px',
+                                        border: '1px solid #A7F3D0',
+                                        backgroundColor: actionState === 'accepting' ? '#D1FAE5' : '#ECFDF5',
+                                        color: '#059669',
+                                        fontSize: '0.78rem',
+                                        fontWeight: 700,
+                                        cursor: actionState ? 'wait' : 'pointer',
+                                        transition: 'all 0.2s ease',
+                                      }}
+                                    >
+                                      {actionState === 'accepting' ? '...' : 'Accept'}
+                                    </button>
+                                    <button
+                                      onClick={handleReject}
+                                      disabled={!!actionState}
+                                      style={{
+                                        padding: '0.35rem 0.85rem',
+                                        borderRadius: '7px',
+                                        border: '1px solid #FECACA',
+                                        backgroundColor: actionState === 'rejecting' ? '#FEE2E2' : '#FEF2F2',
+                                        color: '#DC2626',
+                                        fontSize: '0.78rem',
+                                        fontWeight: 700,
+                                        cursor: actionState ? 'wait' : 'pointer',
+                                        transition: 'all 0.2s ease',
+                                      }}
+                                    >
+                                      {actionState === 'rejecting' ? '...' : 'Reject'}
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <span style={{ fontSize: '0.75rem', color: '#9E8F94' }}>—</span>
+                                )}
+                              </td>
+                            </tr>
                           );
                         })}
                       </tbody>
